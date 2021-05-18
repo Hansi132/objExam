@@ -34,7 +34,7 @@ public class Run {
     	
         UIManager.setLookAndFeel(new FlatDarculaLaf());
         TestAddComponent.test();
-        DefaultGui.renderDefaultGui();
+        DefaultGui gui = new DefaultGui();
     }
 
 	public static Run getInstance() {
