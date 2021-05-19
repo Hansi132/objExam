@@ -1,9 +1,10 @@
 package no.MCH.model;
 
 public class CustomerModel {
-	private int customerNumber;
+	private Integer customerNumber;
 	private String customerName;
 	private String contactFirstName;
+	private String contactLastName;
 	private String phone;
 	private String addressLine1;
 	private String addressLine2;
@@ -18,13 +19,14 @@ public class CustomerModel {
 		this.customerNumber = customerNumber;
 	}
 	
-	public CustomerModel(int customerNumber, String customerName, String contactFirstName, String phone,
+	public CustomerModel(Integer customerNumber, String customerName, String contactFirstName, String contactLastName, String phone,
 			String addressLine1, String addressLine2, String city, String state, String postalCode, String country,
 			EmployeeModel salesRepEmployee, Double creditLimit) {
 		super();
 		this.customerNumber = customerNumber;
 		this.customerName = customerName;
 		this.contactFirstName = contactFirstName;
+		this.contactLastName = contactLastName;
 		this.phone = phone;
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
@@ -36,7 +38,7 @@ public class CustomerModel {
 		this.creditLimit = creditLimit;
 	}
 	
-	public int getCustomerNumber() {
+	public Integer getCustomerNumber() {
 		return customerNumber;
 	}
 	
@@ -130,6 +132,14 @@ public class CustomerModel {
 	
 	public void setCreditLimit(Double creditLimit) {
 		this.creditLimit = creditLimit;
+	}
+
+	public String getContactLastName() {
+		return contactLastName;
+	}
+
+	public void setContactLastName(String contactLastName) {
+		this.contactLastName = contactLastName;
 	}
 	
 }

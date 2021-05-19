@@ -51,5 +51,11 @@ public class applicationMenu extends JMenuBar implements ActionListener {
 		this.add(actions);
 		this.add(help);
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }
