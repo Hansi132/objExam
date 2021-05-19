@@ -28,6 +28,10 @@ import javax.swing.JFrame;
 		setLayout(new GridLayout());
 		
 		
+		setJMenuBar(appMenu);
+		add(content);
+		
+		
 		
 		setResizable(false);
 		setVisible(true);
