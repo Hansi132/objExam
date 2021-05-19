@@ -1,7 +1,7 @@
 package no.MCH.model;
 
 public class OfficeModel {
-	private Integer officeCode;
+	private String officeCode;
 	private String city;
 	private String phone;
 	private String addressLine1;
@@ -11,11 +11,11 @@ public class OfficeModel {
 	private String postalCode;
 	private String territory;
 	
-	public OfficeModel(Integer officeCode) {
+	public OfficeModel(String officeCode) {
 		this.officeCode = officeCode;
 	}
 	
-	public OfficeModel(Integer officeCode, String city, String phone, String addressLine1, String addressLine2,
+	public OfficeModel(String officeCode, String city, String phone, String addressLine1, String addressLine2,
 			String state, String country, String postalCode, String territory) {
 		super();
 		this.officeCode = officeCode;
@@ -29,11 +29,11 @@ public class OfficeModel {
 		this.territory = territory;
 	}
 
-	public Integer getOfficeCode() {
+	public String getOfficeCode() {
 		return officeCode;
 	}
 	
-	public void setOfficeCode(Integer officeCode) {
+	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
 	
