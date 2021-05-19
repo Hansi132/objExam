@@ -22,19 +22,19 @@ public class CustomerController {
 		
 		if (filter != null) { 
 			sqlBuilder.append(" WHERE");
-			if (filter.getAddressLine1() != null) sqlBuilder.append(" addressLine1 LIKE " + filter.getAddressLine1() + " AND");
-			if (filter.getAddressLine2() != null) sqlBuilder.append(" addressLine2 LIKE " + filter.getAddressLine2() + " AND");
-			if (filter.getCity() != null) sqlBuilder.append(" city LIKE " + filter.getCity() + " AND");
-			if (filter.getContactFirstName() != null) sqlBuilder.append(" contactFirstName LIKE " + filter.getContactFirstName() + " AND");
-			if (filter.getContactLastName() != null) sqlBuilder.append(" contactLastName LIKE " + filter.getContactLastName() + " AND"); 
-			if (filter.getCountry() != null) sqlBuilder.append(" country LIKE " + filter.getCountry() + " AND");
+			if (filter.getAddressLine1() != null) sqlBuilder.append(" addressLine1 LIKE '" + filter.getAddressLine1() + "' AND");
+			if (filter.getAddressLine2() != null) sqlBuilder.append(" addressLine2 LIKE '" + filter.getAddressLine2() + "' AND");
+			if (filter.getCity() != null) sqlBuilder.append(" city LIKE '" + filter.getCity() + "' AND");
+			if (filter.getContactFirstName() != null) sqlBuilder.append(" contactFirstName LIKE '" + filter.getContactFirstName() + "' AND");
+			if (filter.getContactLastName() != null) sqlBuilder.append(" contactLastName LIKE '" + filter.getContactLastName() + "' AND"); 
+			if (filter.getCountry() != null) sqlBuilder.append(" country LIKE '" + filter.getCountry() + "' AND");
 			if (filter.getCreditLimit() != null) sqlBuilder.append(" creditLimit = " + filter.getCreditLimit() + " AND");
-			if (filter.getCustomerName() != null) sqlBuilder.append(" customerName LIKE " + filter.getCustomerName() + " AND");
-			if (filter.getCustomerNumber() != null) sqlBuilder.append(" customerNumber LIKE " + filter.getCustomerNumber() + " AND");
-			if (filter.getPhone() != null) sqlBuilder.append("phone LIKE " + filter.getPhone() + " AND");
-			if (filter.getPostalCode() != null) sqlBuilder.append("postalCode LIKE " + filter.getPostalCode() + " AND");
+			if (filter.getCustomerName() != null) sqlBuilder.append(" customerName LIKE '" + filter.getCustomerName() + "' AND");
+			if (filter.getCustomerNumber() != null) sqlBuilder.append(" customerNumber LIKE '" + filter.getCustomerNumber() + "' AND");
+			if (filter.getPhone() != null) sqlBuilder.append("phone LIKE '" + filter.getPhone() + "' AND");
+			if (filter.getPostalCode() != null) sqlBuilder.append("postalCode LIKE '" + filter.getPostalCode() + "' AND");
 			if (filter.getSalesRepEmployee() != null) sqlBuilder.append("salesRepEmployeeNumber = " + filter.getSalesRepEmployee().getEmployeeNumber() + " AND");
-			if (filter.getState() != null) sqlBuilder.append("state LIKE " + filter.getState() + " AND");
+			if (filter.getState() != null) sqlBuilder.append("state LIKE '" + filter.getState() + "' AND");
 			sqlBuilder.append(" 1=1");
 		}
 		sqlBuilder.append(";");
@@ -46,8 +46,8 @@ public class CustomerController {
 			con = DatabaseConnection.getConnection();
 			selectStmt = con.prepareStatement(sqlBuilder.toString());
 			rs = selectStmt.executeQuery();
-			int ps = 1;
 			while(rs.next()) {
+				int ps = 1;
 				customerList.add(
 						new CustomerModel(
 								rs.getInt(ps++),
@@ -66,7 +66,7 @@ public class CustomerController {
 						));
 			}
 		} catch (SQLException e) {
-			log.error(e.getMessage(), e);
+			e.printStackTrace();
 		} finally {
 			con.close();
 			selectStmt.close();
