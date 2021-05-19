@@ -10,13 +10,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import no.MCH.database.DatabaseConnection;
+import no.MCH.exception.CustomerNotFoundException;
 import no.MCH.model.CustomerModel;
 import no.MCH.model.EmployeeModel;
 
 public class CustomerController {
 	private static final Logger log = Logger.getLogger(CustomerController.class);
 	
-	public List<CustomerModel> getAllCustomers(CustomerModel filter) throws SQLException {
+	public List<CustomerModel> getAllCustomers(CustomerModel filter) throws SQLException, CustomerNotFoundException {
 		List<CustomerModel> customerList = new ArrayList<>();
 		StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM customers");
 		
@@ -62,7 +63,7 @@ public class CustomerController {
 								rs.getString(ps++),
 								rs.getString(ps++),
 								new EmployeeModel(rs.getInt(ps++)),
-								rs.getDouble(ps++)
+								rs.getDouble(ps)
 						));
 			}
 		} catch (SQLException e) {
@@ -72,11 +73,58 @@ public class CustomerController {
 			selectStmt.close();
 			rs.close();
 		}
+		if (customerList.isEmpty() || customerList == null) {
+			throw new CustomerNotFoundException("Customer was not found.");
+		}
 		return customerList;
 	}
 	
-	public CustomerModel getCustomer(Integer customerNumber) {
-		return null;
+	public CustomerModel getCustomer(Integer customerNumber) throws CustomerNotFoundException, SQLException {
+		if (customerNumber == null) {
+			throw new CustomerNotFoundException("No customer number as input.");
+		}
+		
+		CustomerModel customerModel = null;
+		
+		String sql = "SELECT * FROM customers WHERE customerNumer = ?";
+		Connection con = null; 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, customerNumber);
+			rs = pstmt.executeQuery();
+			
+			int ps = 1;
+			customerModel = new CustomerModel(
+					rs.getInt(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					rs.getString(ps++),
+					new EmployeeModel(rs.getInt(ps++)),
+					rs.getDouble(ps)
+			);
+			
+		} catch(SQLException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			con.close();
+			pstmt.close();
+			rs.close();
+		}
+		if (customerModel == null) {
+			throw new CustomerNotFoundException("No customers with current customerNumber found.");
+		}
+		return customerModel;
 	}
 
 }
