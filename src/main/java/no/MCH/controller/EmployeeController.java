@@ -21,14 +21,15 @@ public class EmployeeController {
 		List<EmployeeModel> employeeList = new ArrayList<>();
 		StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM employees");
 		if (filter != null) {
-			if (filter.getEmployeeNumber() != null) sqlBuilder.append("");
-			if (filter.getLastName() != null) sqlBuilder.append("");
-			if (filter.getFirstName() != null) sqlBuilder.append("");
-			if (filter.getExtension() != null) sqlBuilder.append("");
-			if (filter.getEmail() != null) sqlBuilder.append("");
-			if (filter.getOffice().getOfficeCode() != null) sqlBuilder.append("");
-			if (filter.getReportsTo().getEmployeeNumber() != null) sqlBuilder.append("");
-			if (filter.getJobTitle() != null) sqlBuilder.append("");
+			sqlBuilder.append(" WHERE");
+			if (filter.getEmployeeNumber() != null) sqlBuilder.append(" customerNumer = " + filter.getEmployeeNumber() + " AND");
+			if (filter.getLastName() != null) sqlBuilder.append(" lastName LIKE '" + filter.getLastName() + "' AND");
+			if (filter.getFirstName() != null) sqlBuilder.append(" firstName LIKE '" + filter.getFirstName() + "' AND");
+			if (filter.getExtension() != null) sqlBuilder.append(" extension LIKE '" + filter.getExtension() + "' AND");
+			if (filter.getEmail() != null) sqlBuilder.append(" email LIKE '" + filter.getEmail() + "' AND");
+			if (filter.getOffice().getOfficeCode() != null) sqlBuilder.append(" officeCode LIKE '" + filter.getOffice().getOfficeCode() + "' AND");
+			if (filter.getReportsTo().getEmployeeNumber() != null) sqlBuilder.append("reportsTo = " + filter.getReportsTo().getEmployeeNumber() + " AND");
+			if (filter.getJobTitle() != null) sqlBuilder.append(" jobTitle LIKE '" + filter.getJobTitle() + "' AND");
 			sqlBuilder.append(" 1=1");
 		}
 		sqlBuilder.append(";");
