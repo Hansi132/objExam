@@ -15,7 +15,7 @@ import no.MCH.model.CustomerModel;
 import no.MCH.model.EmployeeModel;
 
 public class CustomerController {
-	private static final Logger log = Logger.getLogger(CustomerController.class);
+	private static Logger log = Logger.getLogger(CustomerController.class);
 	
 	public List<CustomerModel> getAllCustomers(CustomerModel filter) throws SQLException, CustomerNotFoundException {
 		List<CustomerModel> customerList = new ArrayList<>();
@@ -125,6 +125,73 @@ public class CustomerController {
 			throw new CustomerNotFoundException("No customers with current customerNumber found.");
 		}
 		return customerModel;
+	}
+	
+	public void addCustomer(CustomerModel customer) throws SQLException {
+		String sql = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int ps = 1;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(ps++, customer.getCustomerNumber());
+			pstmt.setString(ps++, customer.getCustomerName());
+			pstmt.setString(ps++, customer.getContactLastName());
+			pstmt.setString(ps++, customer.getContactFirstName());
+			pstmt.setString(ps++, customer.getPhone());
+			pstmt.setString(ps++, customer.getAddressLine1());
+			pstmt.setString(ps++, customer.getAddressLine2());
+			pstmt.setString(ps++, customer.getCity());
+			pstmt.setString(ps++, customer.getState());
+			pstmt.setString(ps++, customer.getPostalCode());
+			pstmt.setString(ps++, customer.getCountry());
+			pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
+			pstmt.setDouble(ps, customer.getCreditLimit());
+			
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			con.close();
+			pstmt.close();
+		}
+		
+	}
+	
+	public void addCustomer(List<CustomerModel> customerModelList) throws SQLException {
+		String sql = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			for (CustomerModel customer : customerModelList) {
+				int ps = 1;
+				
+				pstmt.setInt(ps++, customer.getCustomerNumber());
+				pstmt.setString(ps++, customer.getCustomerName());
+				pstmt.setString(ps++, customer.getContactLastName());
+				pstmt.setString(ps++, customer.getContactFirstName());
+				pstmt.setString(ps++, customer.getPhone());
+				pstmt.setString(ps++, customer.getAddressLine1());
+				pstmt.setString(ps++, customer.getAddressLine2());
+				pstmt.setString(ps++, customer.getCity());
+				pstmt.setString(ps++, customer.getState());
+				pstmt.setString(ps++, customer.getPostalCode());
+				pstmt.setString(ps++, customer.getCountry());
+				pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
+				pstmt.setDouble(ps, customer.getCreditLimit());
+				
+				pstmt.executeQuery();
+			}
+		} catch (SQLException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			con.close();
+			pstmt.close();
+		}
 	}
 
 }

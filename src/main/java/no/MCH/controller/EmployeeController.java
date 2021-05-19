@@ -1,5 +1,7 @@
 package no.MCH.controller;
 
-public class EmployeeController {
+import org.apache.log4j.Logger;
 
+public class EmployeeController {
+	private static Logger log = Logger.getLogger(EmployeeController.class);
 }
