@@ -19,13 +19,8 @@ public class DatabaseConnection {
 	
 	public static Connection getConnection() {
 		try {
-			Class.forName(driverName);
-			try {
-				con = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
-			} catch (SQLException e) {
-				log.error(e.getMessage(), e);
-			}
-		} catch (ClassNotFoundException e) {
+			con = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
+		} catch (SQLException e) {
 			log.error(e.getMessage(), e);
 		}
 		return con;
