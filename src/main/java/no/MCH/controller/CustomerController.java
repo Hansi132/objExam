@@ -243,8 +243,27 @@ public class CustomerController {
 			con.close();
 			pstmt.close();
 		}
+	}
+	
+	public void deleteCustomer(Integer key) throws CustomerNotFoundException, SQLException {
+		if (key == null) {
+			throw new CustomerNotFoundException("No key or customer found");
+		}
+		String sql = "DELETE FROM customers WHERE customerNumber = ?;";
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		
-		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pstmt.close();
+			con.close();
+		}
 	}
 
 }

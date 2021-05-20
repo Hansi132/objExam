@@ -14,7 +14,7 @@ public class EmployeeModel {
 		this.employeeNumber = employeeNumber;
 	}
 	
-	public EmployeeModel(Integer employeeNumber, String firstName, String lastName, String extension, String email,
+	public EmployeeModel(Integer employeeNumber, String lastName, String firstName, String extension, String email,
 			OfficeModel office, EmployeeModel reportsTo, String jobTitle) {
 		super();
 		this.employeeNumber = employeeNumber;

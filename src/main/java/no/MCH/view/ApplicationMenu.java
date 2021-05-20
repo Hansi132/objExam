@@ -3,21 +3,28 @@ package no.MCH.view;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
 import no.MCH.Run;
 import no.MCH.controller.CustomerController;
+import no.MCH.controller.FileImportController;
 import no.MCH.database.DatabaseConnection;
 import no.MCH.exception.CustomerNotFoundException;
+import no.MCH.exception.TypeNotFoundException;
 import no.MCH.model.CustomerModel;
 import no.MCH.model.DataTableModel;
 
@@ -59,6 +66,26 @@ public class ApplicationMenu extends JMenuBar {
 		openFile.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.showOpenDialog(Run.getInstance().getGui());
+            File file = fileChooser.getSelectedFile();
+            JPanel jPanel = new JPanel();
+            String[] types = {"customer", "employee", "order", "payment", "product"};
+            Object[] options = {"Confirm", "Cancel"};
+            JComboBox<String> typeList = new JComboBox<>(types);
+            jPanel.add(new JLabel("What are you importing"));
+            jPanel.add(typeList);
+            int result = JOptionPane.showOptionDialog(null, jPanel, "Select import item", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (result == JOptionPane.OK_OPTION) {
+            	String selectedType = (String) typeList.getSelectedItem();
+            	try {
+					new FileImportController().csvFileImport(file, selectedType);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (TypeNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+            }
         });
 		menuFile.add(openFile);
         
