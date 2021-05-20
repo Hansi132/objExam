@@ -1,7 +1,7 @@
 package no.MCH.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 public class TestAddComponent extends DefaultGui{
 	private static final long serialVersionUID = 1L;
