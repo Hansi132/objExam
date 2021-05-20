@@ -22,6 +22,7 @@ import no.MCH.model.ComponentModel;
 		setJMenuBar(appMenu);	
 		setResizable(true);
 		setVisible(true);
+		setDefaultCloseOperation(0);
 	}
 	
 	public static void renderDefaultGui(DefaultGui defaultGui) {
