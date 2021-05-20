@@ -14,5 +14,13 @@ public final class ComponentModel {
     public void addComponent(Component component) {
         this.componentList.add(component);
     }
+    
+    public Component getComponent(Component component) {
+    	return this.componentList.get(this.componentList.indexOf(component));
+    }
+    
+    public void removeComponent(Component component) {
+    	this.componentList.remove(component);
+    }
 
 }

@@ -12,15 +12,17 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import no.MCH.config.Config;
 import no.MCH.config.MainConfig;
 import no.MCH.constants.Constants;
-import no.MCH.view.ContentInformation;
 import no.MCH.view.DefaultGui;
 import no.MCH.view.MainContent;
+import no.MCH.view.TableContent;
 
 public class Run {
 	public static final Logger log = Logger.getLogger(Run.class);
 	
 	private static Run INSTANCE;
 	private static Config config = new Config();
+	private static DefaultGui gui;
+	private TableContent tableContent;
 
     Run() throws UnsupportedLookAndFeelException {
     	INSTANCE = this;
@@ -34,8 +36,10 @@ public class Run {
     	
         UIManager.setLookAndFeel(new FlatDarculaLaf());
         new MainContent();
-        new ContentInformation();
-        DefaultGui gui = new DefaultGui();
+        Object[][] data = {};
+        String[] columnNames = {};
+        tableContent = new TableContent(data, columnNames);
+        gui = new DefaultGui();
     }
 
 	public static Run getInstance() {
@@ -47,6 +51,14 @@ public class Run {
 	
 	public MainConfig getConfig() { 
 		return Run.config.get();
+	}
+	
+	public DefaultGui getGui() {
+		return Run.gui;
+	}
+	
+	public TableContent getTableContent() {
+		return this.tableContent;
 	}
 
 }

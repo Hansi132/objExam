@@ -28,4 +28,13 @@ public class DefaultGui extends JFrame {
             defaultGui.add(component);
         }
     }
+	
+	public static void removeComponent(DefaultGui defaultGui, Component component) {
+		defaultGui.remove(component);
+	}
+	
+	public static void refreshGui(DefaultGui defaultGui) {
+		defaultGui.revalidate();
+		defaultGui.repaint();
+	}
 }
