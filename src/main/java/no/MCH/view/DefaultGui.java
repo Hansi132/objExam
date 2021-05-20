@@ -1,14 +1,11 @@
 package no.MCH.view;
 
-import no.MCH.model.ComponentModel;
-import no.MCH.utils.FontLoader;
-
-import javax.swing.*;
-import java.awt.*;
-
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+
+import no.MCH.model.ComponentModel;
 
 
 	public class DefaultGui extends JFrame{
@@ -17,18 +14,14 @@ import javax.swing.JFrame;
 		private ApplicationMenu appMenu = new ApplicationMenu();
 		
 	public DefaultGui(){
-		
 		renderDefaultGui(this);
-		
 		setTitle("Exam Spring 2021");
 		setSize(1030, 1000);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout());
 		setJMenuBar(appMenu);	
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
-		
-		
 	}
 	
 	public static void renderDefaultGui(DefaultGui defaultGui) {
@@ -37,25 +30,3 @@ import javax.swing.JFrame;
         }
     }
 }
-
-
-
-
-
-
-/*
-public class DefaultGui {
-    public static final ComponentModel componentModel = new ComponentModel();
-
-    public static void renderDefaultGui() {
-        JFrame frame = new JFrame("");
-        frame.setFont(FontLoader.loadFont("FreeSerif"));
-
-        for (Component component : componentModel.getComponentList()) {
-            frame.add(component);
-        }
-
-        frame.pack();
-        frame.setVisible(true);
-    } 
-}*/ 
