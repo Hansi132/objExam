@@ -12,6 +12,7 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import no.MCH.config.Config;
 import no.MCH.config.MainConfig;
 import no.MCH.constants.Constants;
+import no.MCH.view.ContentInformation;
 import no.MCH.view.DefaultGui;
 import no.MCH.view.MainContent;
 
@@ -33,6 +34,7 @@ public class Run {
     	
         UIManager.setLookAndFeel(new FlatDarculaLaf());
         new MainContent();
+        new ContentInformation();
         DefaultGui gui = new DefaultGui();
     }
 

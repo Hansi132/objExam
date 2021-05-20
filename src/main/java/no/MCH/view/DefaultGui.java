@@ -16,7 +16,7 @@ public class DefaultGui extends JFrame {
 		setTitle("Exam Spring 2021");
 		setSize(1030, 1000);
 		setLocationRelativeTo(null);
-		setLayout(new GridLayout());
+		setLayout(new GridLayout(1, 2));
 		setJMenuBar(appMenu);	
 		setResizable(true);
 		setVisible(true);
