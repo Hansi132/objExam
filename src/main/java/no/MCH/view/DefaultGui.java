@@ -14,9 +14,7 @@ import javax.swing.JFrame;
 	public class DefaultGui extends JFrame{
 		private static final long serialVersionUID = 1L;	
 		public static final ComponentModel componentModel = new ComponentModel();
-		
 		private ApplicationMenu appMenu = new ApplicationMenu();
-		private MainContent content = new MainContent();
 		
 	public DefaultGui(){
 		
@@ -26,13 +24,7 @@ import javax.swing.JFrame;
 		setSize(1030, 1000);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout());
-		
-		
-		setJMenuBar(appMenu);
-		add(content);
-		
-		
-		
+		setJMenuBar(appMenu);	
 		setResizable(false);
 		setVisible(true);
 		
