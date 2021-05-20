@@ -2,6 +2,6 @@ package no.MCH.view;
 
 import javax.swing.JPanel;
 
-public class mainContent extends JPanel  {
+public class MainContent extends JPanel  {
 
 }

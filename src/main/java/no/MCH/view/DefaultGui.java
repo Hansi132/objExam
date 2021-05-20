@@ -15,8 +15,8 @@ import javax.swing.JFrame;
 		private static final long serialVersionUID = 1L;	
 		public static final ComponentModel componentModel = new ComponentModel();
 		
-		private applicationMenu appMenu = new applicationMenu();
-		private mainContent content = new mainContent();
+		private ApplicationMenu appMenu = new ApplicationMenu();
+		private MainContent content = new MainContent();
 		
 	public DefaultGui(){
 		

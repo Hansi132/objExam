@@ -25,4 +25,10 @@ public class DatabaseConnection {
 		}
 		return con;
 	}
+	
+	public static boolean testConnection() {
+		boolean haveConnection = false;
+		if (getConnection() != null) haveConnection = true;
+		return haveConnection;
+	}
 }

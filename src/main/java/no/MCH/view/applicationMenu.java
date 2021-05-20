@@ -1,19 +1,15 @@
 package no.MCH.view;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
+import no.MCH.database.DatabaseConnection;
 
-
-
-public class applicationMenu extends JMenuBar implements ActionListener {
-	
-	
+public class ApplicationMenu extends JMenuBar {
+	private static final long serialVersionUID = 1L;
 	
 	private JMenu menuFile = null;
 	private JMenuItem dBconnectionItem = null;
@@ -22,7 +18,7 @@ public class applicationMenu extends JMenuBar implements ActionListener {
 	private JMenuItem option = null;
 	private JMenu actions = null;
 	
-	protected applicationMenu() {
+	protected ApplicationMenu() {
 		displayMenuBar();
 	}
 	
@@ -31,11 +27,17 @@ public class applicationMenu extends JMenuBar implements ActionListener {
 		menuFile = new JMenu("File");
 		
 		dBconnectionItem = new JMenuItem("Test your database connection");
-		dBconnectionItem.addActionListener(this);
+		dBconnectionItem.addActionListener(e -> {
+			if (DatabaseConnection.testConnection()) {
+				JOptionPane.showMessageDialog(null, "You have connection to the database.", "DatabaseConnection", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Error you do not have connection to the database.", "DatabaseConnection", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		menuFile.add(dBconnectionItem);
 		
 		exitItem = new JMenuItem("Exit");
-		exitItem.addActionListener(this);
+		exitItem.addActionListener(e -> System.exit(0));
 		menuFile.add(exitItem);
 		
 		actions = new JMenu("Actions");
@@ -43,19 +45,12 @@ public class applicationMenu extends JMenuBar implements ActionListener {
 		help = new JMenu("Help");
 		
 		option = new JMenuItem ("Info about this application");
-		option.addActionListener(this);
+		option.addActionListener(e -> JOptionPane.showMessageDialog(null, "Exam application created by Marthin, Christopher and Hans", "Application information", JOptionPane.INFORMATION_MESSAGE));
 		help.add(option);
 		
 		
 		this.add(menuFile);
 		this.add(actions);
 		this.add(help);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-		
+	}		
 }

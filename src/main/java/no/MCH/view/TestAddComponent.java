@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TestAddComponent extends DefaultGui{
+	private static final long serialVersionUID = 1L;
 
-    public static void test() {
+	public static void test() {
         DefaultGui.componentModel.addComponent(new JFileChooser());
         JButton jButton = new JButton();
 
