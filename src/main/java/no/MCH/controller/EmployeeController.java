@@ -110,4 +110,58 @@ public class EmployeeController {
 		}
 		return employeeModel;
 	}
+	
+	public void addEmployee(EmployeeModel employee) throws SQLException {
+		String sql = "INSERT INTO employee VALUES (?,?,?,?,?,?,?,?);";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int ps = 1;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(ps++, employee.getEmployeeNumber());
+			pstmt.setString(ps++, employee.getLastName());
+			pstmt.setString(ps++, employee.getFirstName());
+			pstmt.setString(ps++, employee.getExtension());
+			pstmt.setString(ps++, employee.getEmail());
+			pstmt.setString(ps++, employee.getOffice().getOfficeCode());
+			pstmt.setInt(ps++, employee.getReportsTo().getEmployeeNumber());
+			pstmt.setString(ps, employee.getJobTitle());
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			con.close();
+			pstmt.close();
+		}
+	}
+	
+	public void addEmployee(List<EmployeeModel> employeeList) throws SQLException {
+		String sql = "INSERT INTO employee VALUES (?,?,?,?,?,?,?,?);";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			for (EmployeeModel employee : employeeList) {
+				int ps = 1;
+				pstmt.setInt(ps++, employee.getEmployeeNumber());
+				pstmt.setString(ps++, employee.getLastName());
+				pstmt.setString(ps++, employee.getFirstName());
+				pstmt.setString(ps++, employee.getExtension());
+				pstmt.setString(ps++, employee.getEmail());
+				pstmt.setString(ps++, employee.getOffice().getOfficeCode());
+				pstmt.setInt(ps++, employee.getReportsTo().getEmployeeNumber());
+				pstmt.setString(ps, employee.getJobTitle());
+				pstmt.executeQuery();
+			}
+		} catch (SQLException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			con.close();
+			pstmt.close();
+		}
+	}
 }
