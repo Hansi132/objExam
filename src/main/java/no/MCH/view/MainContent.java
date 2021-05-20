@@ -1,12 +1,12 @@
 package no.MCH.view;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
 
 import no.MCH.Run;
 import no.MCH.controller.CustomerController;
@@ -19,8 +19,8 @@ public class MainContent extends JPanel {
 	
 	public MainContent() {
 		mainContentBuilder();
-		this.setLayout(new GridLayout(10, 1));
-		this.setAlignmentX(LEFT_ALIGNMENT);
+		this.setLayout(new GridLayout(0, 1));
+		this.setAlignmentX(FlowLayout.LEFT);
 		DefaultGui.componentModel.addComponent(this);
 	}
 	
@@ -31,13 +31,21 @@ public class MainContent extends JPanel {
 
 	private void addCustomerButton() {
 		JButton addCustomerButton = new JButton("Add customer");
-		addCustomerButton.addActionListener(e -> new AddCustomerPanel());
+		addCustomerButton.addActionListener(e -> {
+			CustomerController controller = new CustomerController();
+			try {
+				controller.addCustomer(new AddCustomerPanel().customerPanel("Add customer", null));
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		});
 		this.add(addCustomerButton);
 	}
 	
 	private void listCustomerButton() {
 		JButton listCustomerButton = new JButton("List customers");
 		listCustomerButton.addActionListener(e -> {
+			CustomerModel customer = new AddCustomerPanel().customerPanel("Customer filter", null);
 			DataTableModel model = (DataTableModel) Run.getInstance().getTableContent().table.getModel();
 			model.setColumnCount(0);
 			model.setRowCount(0);
@@ -49,7 +57,7 @@ public class MainContent extends JPanel {
 			}
 			try {
 				Object rowData[] = new Object[13];
-				List<CustomerModel> customerList = customerController.getAllCustomers(null);
+				List<CustomerModel> customerList = customerController.getAllCustomers(customer);
 				for (int i = 0; i < customerList.size(); i++) {
 					rowData[0] = customerList.get(i).getCustomerNumber().toString();
 					rowData[1] = customerList.get(i).getCustomerName();

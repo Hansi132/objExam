@@ -32,10 +32,10 @@ public class CustomerController {
 			if (filter.getCreditLimit() != null) sqlBuilder.append(" creditLimit = " + filter.getCreditLimit() + " AND");
 			if (filter.getCustomerName() != null) sqlBuilder.append(" customerName LIKE '" + filter.getCustomerName() + "' AND");
 			if (filter.getCustomerNumber() != null) sqlBuilder.append(" customerNumber LIKE '" + filter.getCustomerNumber() + "' AND");
-			if (filter.getPhone() != null) sqlBuilder.append("phone LIKE '" + filter.getPhone() + "' AND");
-			if (filter.getPostalCode() != null) sqlBuilder.append("postalCode LIKE '" + filter.getPostalCode() + "' AND");
-			if (filter.getSalesRepEmployee() != null) sqlBuilder.append("salesRepEmployeeNumber = " + filter.getSalesRepEmployee().getEmployeeNumber() + " AND");
-			if (filter.getState() != null) sqlBuilder.append("state LIKE '" + filter.getState() + "' AND");
+			if (filter.getPhone() != null) sqlBuilder.append(" phone LIKE '" + filter.getPhone() + "' AND");
+			if (filter.getPostalCode() != null) sqlBuilder.append(" postalCode LIKE '" + filter.getPostalCode() + "' AND");
+			if (filter.getSalesRepEmployee() != null) sqlBuilder.append(" salesRepEmployeeNumber = " + filter.getSalesRepEmployee().getEmployeeNumber() + " AND");
+			if (filter.getState() != null) sqlBuilder.append(" state LIKE '" + filter.getState() + "' AND");
 			sqlBuilder.append(" 1=1");
 		}
 		sqlBuilder.append(";");
@@ -128,34 +128,36 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(CustomerModel customer) throws SQLException {
-		String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		int ps = 1;
-		
-		try {
-			con = DatabaseConnection.getConnection();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(ps++, customer.getCustomerNumber());
-			pstmt.setString(ps++, customer.getCustomerName());
-			pstmt.setString(ps++, customer.getContactLastName());
-			pstmt.setString(ps++, customer.getContactFirstName());
-			pstmt.setString(ps++, customer.getPhone());
-			pstmt.setString(ps++, customer.getAddressLine1());
-			pstmt.setString(ps++, customer.getAddressLine2());
-			pstmt.setString(ps++, customer.getCity());
-			pstmt.setString(ps++, customer.getState());
-			pstmt.setString(ps++, customer.getPostalCode());
-			pstmt.setString(ps++, customer.getCountry());
-			pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
-			pstmt.setDouble(ps, customer.getCreditLimit());
+		if (customer != null) {
+			String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			int ps = 1;
 			
-			pstmt.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			con.close();
-			pstmt.close();
+			try {
+				con = DatabaseConnection.getConnection();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(ps++, customer.getCustomerNumber());
+				pstmt.setString(ps++, customer.getCustomerName());
+				pstmt.setString(ps++, customer.getContactLastName());
+				pstmt.setString(ps++, customer.getContactFirstName());
+				pstmt.setString(ps++, customer.getPhone());
+				pstmt.setString(ps++, customer.getAddressLine1());
+				pstmt.setString(ps++, customer.getAddressLine2());
+				pstmt.setString(ps++, customer.getCity());
+				pstmt.setString(ps++, customer.getState());
+				pstmt.setString(ps++, customer.getPostalCode());
+				pstmt.setString(ps++, customer.getCountry());
+				pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
+				pstmt.setDouble(ps, customer.getCreditLimit());
+				
+				pstmt.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				con.close();
+				pstmt.close();
+			}
 		}
 		
 	}
@@ -192,6 +194,57 @@ public class CustomerController {
 			con.close();
 			pstmt.close();
 		}
+	}
+	
+	public void updateCustomer(CustomerModel customer, int key) throws SQLException {
+		String sql = "UPDATE customers SET "
+				+ "customerNumber = ?, "
+				+ "customerName = ?, "
+				+ "contactLastName = ?, "
+				+ "contactFirstName = ?, "
+				+ "phone = ?, "
+				+ "addressLine1 = ?, "
+				+ "addressLine2 = ?, "
+				+ "city = ?, "
+				+ "state = ?, "
+				+ "postalCode = ?, "
+				+ "country = ?, "
+				+ "salesRepEmployeeNumber = ?, "
+				+ "creditLimit = ? "
+				+ "WHERE customerNumber = ?;";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			int ps = 1;
+			
+			pstmt.setInt(ps++, customer.getCustomerNumber());
+			pstmt.setString(ps++, customer.getCustomerName());
+			pstmt.setString(ps++, customer.getContactLastName());
+			pstmt.setString(ps++, customer.getContactFirstName());
+			pstmt.setString(ps++, customer.getPhone());
+			pstmt.setString(ps++, customer.getAddressLine1());
+			pstmt.setString(ps++, customer.getAddressLine2());
+			pstmt.setString(ps++, customer.getCity());
+			pstmt.setString(ps++, customer.getState());
+			pstmt.setString(ps++, customer.getPostalCode());
+			pstmt.setString(ps++, customer.getCountry());
+			pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
+			pstmt.setDouble(ps++, customer.getCreditLimit());
+			pstmt.setInt(ps, key);
+			
+			pstmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			con.close();
+			pstmt.close();
+		}
+		
+		
 	}
 
 }
