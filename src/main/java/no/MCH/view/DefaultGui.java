@@ -6,12 +6,10 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 
 import no.MCH.model.ComponentModel;
-
-
-	public class DefaultGui extends JFrame{
-		private static final long serialVersionUID = 1L;	
-		public static final ComponentModel componentModel = new ComponentModel();
-		private ApplicationMenu appMenu = new ApplicationMenu();
+public class DefaultGui extends JFrame {
+	private static final long serialVersionUID = 1L;	
+	public static final ComponentModel componentModel = new ComponentModel();
+	private ApplicationMenu appMenu = new ApplicationMenu();
 		
 	public DefaultGui(){
 		renderDefaultGui(this);
