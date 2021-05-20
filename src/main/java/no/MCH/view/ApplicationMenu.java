@@ -1,6 +1,7 @@
 package no.MCH.view;
 
 
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,13 +17,17 @@ public class ApplicationMenu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger.getLogger(ApplicationMenu.class);
 	
+	
+	
 	private JMenu menuFile = null;
 	private JMenuItem dBconnectionItem = null;
 	private JMenuItem exitItem = null;
+	private JMenuItem openFile = null;
 	private JMenu help = null;
 	private JMenuItem option = null;
 	private JMenu actions = null;
 	private JMenuItem addCustomer = null;
+	private JMenuItem listCustomer = null;
 	
 	protected ApplicationMenu() {
 		displayMenuBar();
@@ -42,6 +47,10 @@ public class ApplicationMenu extends JMenuBar {
 		});
 		menuFile.add(dBconnectionItem);
 		
+		openFile = new JMenuItem("Open File");
+		
+		menuFile.add(openFile);
+		
 		exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(e -> System.exit(0));
 		menuFile.add(exitItem);
@@ -51,12 +60,16 @@ public class ApplicationMenu extends JMenuBar {
 		addCustomer.addActionListener(e -> {
 			new AddCustomerPanel();
 		});
+		listCustomer = new JMenuItem("List Customer");
+		
 		actions.add(addCustomer);
+		actions.add(listCustomer);
+		
 		
 		help = new JMenu("Help");
 		
 		option = new JMenuItem ("Info about this application");
-		option.addActionListener(e -> JOptionPane.showMessageDialog(null, "Exam application created by Marthin, Christopher and Hans", "Application information", JOptionPane.INFORMATION_MESSAGE));
+		option.addActionListener(e -> JOptionPane.showMessageDialog(null, "Exam application created by Marthin, Christopher and Hans. " + "This Application has been connected to a database with customers, orders, employees etc. ", "Application information", JOptionPane.INFORMATION_MESSAGE));
 		help.add(option);
 		
 		
