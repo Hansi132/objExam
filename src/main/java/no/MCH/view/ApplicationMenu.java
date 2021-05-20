@@ -1,6 +1,8 @@
 package no.MCH.view;
 
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -11,6 +13,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import no.MCH.Run;
 import no.MCH.database.DatabaseConnection;
 
 public class ApplicationMenu extends JMenuBar {
@@ -48,9 +51,12 @@ public class ApplicationMenu extends JMenuBar {
 		menuFile.add(dBconnectionItem);
 		
 		openFile = new JMenuItem("Open File");
-		
+		openFile.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.showOpenDialog(Run.getInstance().getGui());
+        });
 		menuFile.add(openFile);
-		
+        
 		exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(e -> System.exit(0));
 		menuFile.add(exitItem);
