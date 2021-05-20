@@ -128,7 +128,7 @@ public class EmployeeController {
 			pstmt.setString(ps++, employee.getOffice().getOfficeCode());
 			pstmt.setInt(ps++, employee.getReportsTo().getEmployeeNumber());
 			pstmt.setString(ps, employee.getJobTitle());
-			pstmt.executeQuery();
+			pstmt.execute();
 		} catch (SQLException e) {
 			log.error(e.getMessage(), e);
 		} finally {
@@ -155,7 +155,7 @@ public class EmployeeController {
 				pstmt.setString(ps++, employee.getOffice().getOfficeCode());
 				pstmt.setInt(ps++, employee.getReportsTo().getEmployeeNumber());
 				pstmt.setString(ps, employee.getJobTitle());
-				pstmt.executeQuery();
+				pstmt.execute();
 			}
 		} catch (SQLException e) {
 			log.error(e.getMessage(), e);

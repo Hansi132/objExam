@@ -5,11 +5,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 
 import no.MCH.database.DatabaseConnection;
 
 public class ApplicationMenu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(ApplicationMenu.class);
 	
 	private JMenu menuFile = null;
 	private JMenuItem dBconnectionItem = null;
@@ -17,6 +22,7 @@ public class ApplicationMenu extends JMenuBar {
 	private JMenu help = null;
 	private JMenuItem option = null;
 	private JMenu actions = null;
+	private JMenuItem addCustomer = null;
 	
 	protected ApplicationMenu() {
 		displayMenuBar();
@@ -41,6 +47,11 @@ public class ApplicationMenu extends JMenuBar {
 		menuFile.add(exitItem);
 		
 		actions = new JMenu("Actions");
+		addCustomer = new JMenuItem("Add customer");
+		addCustomer.addActionListener(e -> {
+			new AddCustomerPanel();
+		});
+		actions.add(addCustomer);
 		
 		help = new JMenu("Help");
 		

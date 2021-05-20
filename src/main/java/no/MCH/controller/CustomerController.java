@@ -128,7 +128,7 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(CustomerModel customer) throws SQLException {
-		String sql = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int ps = 1;
@@ -150,9 +150,9 @@ public class CustomerController {
 			pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
 			pstmt.setDouble(ps, customer.getCreditLimit());
 			
-			pstmt.executeQuery();
+			pstmt.execute();
 		} catch (SQLException e) {
-			log.error(e.getMessage(), e);
+			e.printStackTrace();
 		} finally {
 			con.close();
 			pstmt.close();
@@ -161,7 +161,7 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(List<CustomerModel> customerModelList) throws SQLException {
-		String sql = "INSERT INTO customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO customers VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -184,10 +184,10 @@ public class CustomerController {
 				pstmt.setInt(ps++, customer.getSalesRepEmployee().getEmployeeNumber());
 				pstmt.setDouble(ps, customer.getCreditLimit());
 				
-				pstmt.executeQuery();
+				pstmt.execute();
 			}
 		} catch (SQLException e) {
-			log.error(e.getMessage(), e);
+			e.printStackTrace();
 		} finally {
 			con.close();
 			pstmt.close();
