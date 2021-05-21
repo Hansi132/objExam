@@ -2,18 +2,25 @@ package no.MCH.view;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import no.MCH.controller.CustomerController;
 import no.MCH.controller.EmployeeController;
+import no.MCH.controller.OrderController;
 import no.MCH.exception.EmployeeNotFoundException;
+import no.MCH.exception.OrderNotFoundException;
 import no.MCH.model.CustomerModel;
 import no.MCH.model.DataTableModel;
 import no.MCH.model.EmployeeModel;
 import no.MCH.model.OfficeModel;
+import no.MCH.model.OrderModel;
 
 public class TableContent {
 	JTable table;
@@ -80,6 +87,36 @@ public class TableContent {
 							}
 						}
 				
+					} else if (columnName.contains("order")) {
+						DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+						Date oDate = null;
+						Date rDate = null;
+						Date sDate = null;
+						try {
+							sDate = new Date(format.parse(target.getModel().getValueAt(row, 3).toString()).getTime());
+							rDate = new Date(format.parse(target.getModel().getValueAt(row, 2).toString()).getTime());
+							oDate = new Date(format.parse(target.getModel().getValueAt(row, 1).toString()).getTime());
+						} catch (ParseException e2) {
+							e2.printStackTrace();
+						}
+						OrderModel order = new OrderModel(
+								Integer.parseInt(key),
+								oDate,
+								rDate,
+								sDate,
+								(String) target.getModel().getValueAt(row, 4),
+								(String) target.getModel().getValueAt(row, 5),
+								new CustomerModel(Integer.parseInt(target.getModel().getValueAt(row, 6).toString())));
+						OrderModel updateOrder = new AddOrderPanel().orderPanel(columnName, order, options);
+						OrderController controller = new OrderController();
+
+						if (updateOrder != null) {
+							try {
+								controller.updateOrder(updateOrder, Integer.parseInt(key));
+							} catch (NumberFormatException | SQLException | OrderNotFoundException e1) {
+								e1.printStackTrace();
+							}
+						}
 					}
 				}
 			}

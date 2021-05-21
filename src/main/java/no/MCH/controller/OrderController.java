@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import no.MCH.database.DatabaseConnection;
+import no.MCH.exception.OrderNotFoundException;
 import no.MCH.model.CustomerModel;
 import no.MCH.model.OrderModel;
 
@@ -35,7 +36,7 @@ public class OrderController {
 			pstmt.setInt(ps, order.getCustomer().getCustomerNumber());
 			pstmt.execute();
 		} catch (SQLException e) {
-			log.error(e.getMessage(), e);
+			e.printStackTrace();
 		} finally {
 			con.close();
 			pstmt.close();
@@ -116,6 +117,64 @@ public class OrderController {
 			rs.close();
 		}
 		return orderList;
+	}
+	
+	public void updateOrder(OrderModel order, Integer key) throws OrderNotFoundException, SQLException {
+		if (key == null) {
+			throw new OrderNotFoundException("No key or order found");
+		}
+		String sql = "UPDATE orders SET "
+				+ "orderNumber = ?, "
+				+ "orderDate = ?, "
+				+ "requiredDate = ?, "
+				+ "shippedDate = ?, "
+				+ "status = ?, "
+				+ "comments = ?, "
+				+ "customerNumber = ? "
+				+ "WHERE orderNumber = ?;";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			int ps = 1;
+			pstmt.setInt(ps++, order.getOrderNumber());
+			pstmt.setDate(ps++, order.getOrderDate());
+			pstmt.setDate(ps++, order.getRequiredDate());
+			pstmt.setDate(ps++, order.getShippedDate());
+			pstmt.setString(ps++, order.getStatus());
+			pstmt.setString(ps++, order.getComments());
+			pstmt.setInt(ps++, order.getCustomer().getCustomerNumber());
+			pstmt.setInt(ps, key);
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			con.close();
+			pstmt.close();
+		}
+	}
+	
+	public void deleteOrder(Integer key) throws OrderNotFoundException, SQLException {
+		if (key == null) {
+			throw new OrderNotFoundException("No key or order found");
+		}
+		String sql = "DELETE FROM orders WHERE orderNumber = ?;";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DatabaseConnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pstmt.close();
+			con.close();
+		}
 	}
 
 }

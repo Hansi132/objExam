@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
-			Run run = new Run();
+			new Run();
 		} catch (UnsupportedLookAndFeelException e) {
 			log.error(e.getMessage(), e);
 		}

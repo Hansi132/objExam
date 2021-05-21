@@ -11,11 +11,13 @@ import javax.swing.JPanel;
 import no.MCH.Run;
 import no.MCH.controller.CustomerController;
 import no.MCH.controller.EmployeeController;
+import no.MCH.controller.OrderController;
 import no.MCH.exception.CustomerNotFoundException;
 import no.MCH.exception.EmployeeNotFoundException;
 import no.MCH.model.CustomerModel;
 import no.MCH.model.DataTableModel;
 import no.MCH.model.EmployeeModel;
+import no.MCH.model.OrderModel;
 
 public class MainContent extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -39,10 +41,6 @@ public class MainContent extends JPanel {
 		addOrderButton();
 		listOrderButton();
 		deleteOrderButton();
-		
-		addProductButton();
-		listProductButton();
-		deleteProductButton();
 	}
 
 	private void addCustomerButton() {
@@ -207,6 +205,17 @@ public class MainContent extends JPanel {
 	//Order buttons
 	private void addOrderButton() {
 		JButton addOrderButton = new JButton("Add Order");
+		addOrderButton.addActionListener(e -> {
+			Object[] options = {"Create", "Cancel"};
+			OrderModel order = new AddOrderPanel().orderPanel("Create Order", null, options);
+			if (order != null) {
+				try {
+					new OrderController().addOrder(order);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		this.add(addOrderButton);
 	}
 	
@@ -220,23 +229,25 @@ public class MainContent extends JPanel {
 	
 	private void deleteOrderButton() {
 		JButton deleteOrderButton = new JButton("Delete Order");
+		deleteOrderButton.addActionListener(e -> {
+			Object[] options = {"Delete", "Cancel"};
+			Integer key = null;
+			try {
+				key = Integer.parseInt(new DeleteOptionPanel().createPanel("/images/note.png", "Order icon", "Delete order", options).toString());
+			} catch(NumberFormatException | NullPointerException e3) {
+				//Silent catch to avoid errors.
+			}
+			
+			if (key != null) {
+				try {
+					new EmployeeController().deleteEmployee(key);
+				} catch (CustomerNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		this.add(deleteOrderButton);
 	}
-	
-	//Product buttons
-	private void addProductButton() {
-		JButton addProductButton = new JButton("Add Product");
-		this.add(addProductButton);
-	}
-	
-	private void listProductButton() {
-		JButton listProductButton = new JButton("List Product");
-		this.add(listProductButton);
-	}
-	
-	private void deleteProductButton() {
-		JButton deleteProductButton = new JButton("Delete Product");
-		this.add(deleteProductButton);
-	}
-
 }

@@ -46,39 +46,37 @@ public class OrderPanel {
 		if (result == JOptionPane.OK_OPTION) {
 			java.util.Date fromDateUtil = (java.util.Date) datePicker1.getModel().getValue();
 			java.util.Date toDateUtil = (java.util.Date) datePicker2.getModel().getValue();
-			Date fromDate = new Date(fromDateUtil.getTime());
-			Date toDate = new Date(toDateUtil.getTime());
-			
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			
-			try {
-				DataTableModel model = (DataTableModel) Run.getInstance().getTableContent().table.getModel();
-				model.setColumnCount(0);
-				model.setRowCount(0);
-				model.fireTableDataChanged();
-				Object[] columnNames = {"Order Number", "Order Date", "Required Date", "Shipped Date", "Status", "Comments", "Customer Number"};
-				for (Object name : columnNames) {
-					model.addColumn(name);
+			if (fromDateUtil != null && toDateUtil != null) {
+				Date fromDate = new Date(fromDateUtil.getTime());
+				Date toDate = new Date(toDateUtil.getTime());
+				
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
+				try {
+					DataTableModel model = (DataTableModel) Run.getInstance().getTableContent().table.getModel();
+					model.setColumnCount(0);
+					model.setRowCount(0);
+					model.fireTableDataChanged();
+					Object[] columnNames = {"Order Number", "Order Date", "Required Date", "Shipped Date", "Status", "Comments", "Customer Number"};
+					for (Object name : columnNames) {
+						model.addColumn(name);
+					}
+					Object rowData[] = new Object[8];
+					List<OrderModel> orderList = new OrderController().getAllOrders(null, fromDate, toDate);
+					for (int i = 0; i < orderList.size(); i++) {
+						rowData[0] = orderList.get(i).getOrderNumber().toString();
+						if (orderList.get(i).getOrderDate() != null) rowData[1] = simpleDateFormat.format(orderList.get(i).getOrderDate());
+						if (orderList.get(i).getRequiredDate() != null) rowData[2] = simpleDateFormat.format(orderList.get(i).getRequiredDate());
+						if (orderList.get(i).getShippedDate() != null) rowData[3] = simpleDateFormat.format(orderList.get(i).getShippedDate());
+						rowData[4] = orderList.get(i).getStatus();
+						rowData[5] = orderList.get(i).getComments();
+						rowData[6] = orderList.get(i).getCustomer().getCustomerNumber().toString();
+						model.addRow(rowData);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-				Object rowData[] = new Object[8];
-				List<OrderModel> orderList = new OrderController().getAllOrders(null, fromDate, toDate);
-				for (int i = 0; i < orderList.size(); i++) {
-					rowData[0] = orderList.get(i).getOrderNumber().toString();
-					rowData[1] = simpleDateFormat.format(orderList.get(i).getOrderDate());
-					rowData[2] = simpleDateFormat.format(orderList.get(i).getRequiredDate());
-					rowData[3] = simpleDateFormat.format(orderList.get(i).getShippedDate());
-					rowData[4] = orderList.get(i).getStatus();
-					rowData[5] = orderList.get(i).getComments();
-					rowData[6] = orderList.get(i).getCustomer().getCustomerNumber().toString();
-					model.addRow(rowData);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
-		
-		
-		
 	}
-
 }

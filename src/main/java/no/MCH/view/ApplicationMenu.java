@@ -15,7 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
@@ -149,10 +148,13 @@ public class ApplicationMenu extends JMenuBar {
 		help = new JMenu("Help");
 		
 		option = new JMenuItem ("Info about this application");
-		option.addActionListener(e -> JOptionPane.showMessageDialog(null, "Exam application created by Marthin, Christopher and Hans. " + "This Application has been connected to a database with customers, orders, employees etc. ", "Application information", JOptionPane.INFORMATION_MESSAGE));
+		option.addActionListener(e -> JOptionPane.showMessageDialog(null, "Exam application created by Marthin, Christopher and Hans.\n" 
+																		+ "This Application has been connected to a database with customers, orders, employees etc.\n" 
+																		+ "Double click on a row in the customer or employee list to update.\n "
+																		+ "List customer and employee with empty filter will give all items.\n "
+																		+ "File option in the menubar to test the database connection, and the import action for files.\n"
+																		+ "In the running path of the application the MCHConfig folder has a file with config options for the database.", "Application information", JOptionPane.INFORMATION_MESSAGE));
 		help.add(option);
-		
-		
 		this.add(menuFile);
 		this.add(actions);
 		this.add(help);
