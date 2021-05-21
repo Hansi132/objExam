@@ -23,7 +23,7 @@ public class EmployeeController {
 		StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM employees");
 		if (filter != null) {
 			sqlBuilder.append(" WHERE");
-			if (filter.getEmployeeNumber() != null) sqlBuilder.append(" customerNumer = " + filter.getEmployeeNumber() + " AND");
+			if (filter.getEmployeeNumber() != null) sqlBuilder.append(" employeeNumber = " + filter.getEmployeeNumber() + " AND");
 			if (filter.getLastName() != null) sqlBuilder.append(" lastName LIKE '" + filter.getLastName() + "' AND");
 			if (filter.getFirstName() != null) sqlBuilder.append(" firstName LIKE '" + filter.getFirstName() + "' AND");
 			if (filter.getExtension() != null) sqlBuilder.append(" extension LIKE '" + filter.getExtension() + "' AND");

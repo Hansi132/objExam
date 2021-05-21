@@ -212,6 +212,9 @@ public class MainContent extends JPanel {
 	
 	private void listOrderButton() {
 		JButton listOrderButton = new JButton("List Order");
+		listOrderButton.addActionListener(e -> {
+			new OrderPanel().orderPanel();
+		});
 		this.add(listOrderButton);
 	}
 	
